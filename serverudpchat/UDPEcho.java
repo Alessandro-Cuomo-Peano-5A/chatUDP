@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverudpchat;
+package serverudpecho;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -11,13 +11,14 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author Prof Matteo Palitto
+ * @author Cuomo Alessandro
  */
 
 //utilizzo la classe Clients per memorizzare indirizzo e porta dei clients che si collegano al server
@@ -45,6 +46,8 @@ public class UDPEcho implements Runnable {
     }
 
     public void run() {
+        
+        ArrayList<String> diecimex = new ArrayList<String>();
         DatagramPacket answer; //datagram usato per creare il pacchetto di risposta
         byte[] buffer = new byte[8192]; //buffer per contenere il messaggio ricevuto o da inviare
         // creo un un datagramma UDP usando il buffer come contenitore per i messaggi
@@ -68,20 +71,35 @@ public class UDPEcho implements Runnable {
                 if(clients.get(clientID) == null) {
                     //nel caso sia la prima volta lo inserisco nella lista
                     clients.put(clientID, new Clients(client.addr, client.port)); 
+                     for(int i=0; i<diecimex.size();i++) {
+                    	answer = new DatagramPacket(diecimex.get(i).getBytes(), diecimex.get(i).getBytes().length, client.addr, client.port);
+                        socket.send(answer);
+                    }
                 }
+                
                 System.out.println(clients);
                 message = new String(request.getData(), 0, request.getLength(), "ISO-8859-1");
                 if(message == "quit") {
                     //client si e' rimosso da chat, lo rimuovo da lista dei client connessi
                     clients.remove(clientID);
                 }
+                
+                if(diecimex.size()<10)
+                        
+                	diecimex.add(message);
+                else {
+                	diecimex.remove(message);
+                	diecimex.add(message);
+                }
 
                 //invio il messaggio ricevuto a tutti i client connessi al server
                 for(Clients clnt: clients.values()) {
                     // costruisco il datagram di risposta usando il messaggio appena ricevuto e inviandolo a ogni client connesso
+                    
                     answer = new DatagramPacket(request.getData(), request.getLength(), clnt.addr, clnt.port);
                     socket.send(answer);
                 }
+               
             } catch (IOException ex) {
                 Logger.getLogger(UDPEcho.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverudpchat;
+package serverudpecho;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author pc15
+ * @author Cuomo Alessandro
  */
 public class ServerUDPEcho {
 
