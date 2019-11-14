@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Prof Matteo Palitto 
+ * @author Chiericozzi_Gabriele
  */
 public class SendUserInputToServer implements Runnable {
     DatagramSocket socket;
@@ -34,16 +34,23 @@ public class SendUserInputToServer implements Runnable {
     public void run() {
 
         byte[] buffer;
-        String messaggio;
+        String messaggio, user_name;
         Scanner tastiera = new Scanner(System.in);
         DatagramPacket userDatagram;
-
+        Scanner input  = new Scanner(System.in);
+        
+        
         try {
+            System.out.println("Inserisci il tuo user name");
+            System.out.print("> ");
+            user_name = input.nextLine();
+            System.out.println("Inserisci il tuo");
             System.out.print("> ");
             do {
                 //Leggo da tastiera il messaggio utente vuole inviare
+                
                 messaggio = tastiera.nextLine();
-
+                messaggio = user_name.concat(":" + messaggio);
                 //Trasformo in array di byte la stringa che voglio inviare
                 buffer = messaggio.getBytes("UTF-8");
 
