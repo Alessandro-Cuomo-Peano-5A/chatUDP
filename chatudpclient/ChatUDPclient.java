@@ -15,7 +15,7 @@ import chatudpclient.SendUserInputToServer;
 
 /**
  *
- * @author Chiericozzi Gabriele
+ * @author Cuomo Alessandro
  */
 public class ChatUDPclient {
 
