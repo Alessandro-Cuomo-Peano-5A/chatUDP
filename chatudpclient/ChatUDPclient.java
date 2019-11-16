@@ -23,8 +23,14 @@ public class ChatUDPclient {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws UnknownHostException {
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GuiUDP().setVisible(true);
+            }
+        });
 
-        String IP_address = "10.100.7.200";
+        String IP_address = "127.0.0.1";
         InetAddress address = InetAddress.getByName(IP_address);
         int UDP_port = 1077;
         

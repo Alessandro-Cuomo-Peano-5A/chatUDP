@@ -44,7 +44,7 @@ public class SendUserInputToServer implements Runnable {
             System.out.println("Inserisci il tuo user name");
             System.out.print("> ");
             user_name = input.nextLine();
-            System.out.println("Inserisci il tuo");
+            System.out.println("Inserisci il tuo messaggio");
             System.out.print("> ");
             do {
                 //Leggo da tastiera il messaggio utente vuole inviare
